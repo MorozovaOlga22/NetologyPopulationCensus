@@ -2,13 +2,17 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.example.Education.*;
 import static org.example.Main.*;
 import static org.example.Sex.MAN;
 import static org.example.Sex.WOMAN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 class MainTest {
     private final List<Person> personsForTest = generateTestPersons();
@@ -22,7 +26,7 @@ class MainTest {
         final long actualCount = countMinorAge(personsForTest);
 
         // then:
-        assertEquals(expectedCount, actualCount);
+        assertThat(actualCount, equalTo(expectedCount));
     }
 
     @Test
@@ -34,8 +38,8 @@ class MainTest {
         final List<String> actualLastNames = getConscriptLastNames(personsForTest);
 
         // then:
-        assertEquals(1, actualLastNames.size());
-        assertEquals(expectedLastName, actualLastNames.get(0));
+        assertThat(actualLastNames, hasSize(1));
+        assertThat(actualLastNames, hasItem(expectedLastName));
     }
 
     @Test
@@ -47,7 +51,33 @@ class MainTest {
         final List<Person> actualPersons = getPotentialWorkers(personsForTest);
 
         // then:
-        assertEquals(expectedPersons, actualPersons);
+        assertThat(actualPersons, equalTo(expectedPersons));
+    }
+
+    @Test
+    void testGeneratePersonsCount() {
+        // given:
+        final int expectedPersonsCount = 10_000_000;
+
+        // when:
+        final Collection<Person> actualGeneratedPersons = generatePersons();
+
+        // then:
+        assertThat(actualGeneratedPersons, hasSize(expectedPersonsCount));
+    }
+
+    @Test
+    void testGeneratePersonsAge() {
+        // given:
+        final int expectedMaxPersonsAge = 99;
+
+        // when:
+        final Collection<Integer> actualGeneratedAges = generatePersons().stream()
+                .map(Person::getAge)
+                .collect(Collectors.toList());
+
+        // then:
+        assertThat(actualGeneratedAges, everyItem(lessThanOrEqualTo(expectedMaxPersonsAge)));
     }
 
     private List<Person> generateTestPersons() {
