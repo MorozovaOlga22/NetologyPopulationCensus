@@ -19,7 +19,7 @@ public class Main {
         potentialWorkers.forEach(System.out::println);
     }
 
-    private static Collection<Person> generatePersons() {
+    static Collection<Person> generatePersons() {
         final List<String> names = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
         final List<String> families = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
         final Collection<Person> persons = new ArrayList<>();
