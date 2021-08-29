@@ -36,13 +36,13 @@ public class Main {
         return persons;
     }
 
-    private static long countMinorAge(Collection<Person> persons) {
+    static long countMinorAge(Collection<Person> persons) {
         return persons.stream()
                 .filter(person -> person.getAge() < 18)
                 .count();
     }
 
-    private static List<String> getConscriptLastNames(Collection<Person> persons) {
+    static List<String> getConscriptLastNames(Collection<Person> persons) {
         return persons.stream()
                 .filter(person -> person.getAge() >= 18 && person.getAge() < 27)
                 .filter(person -> person.getSex() == Sex.MAN)
@@ -50,7 +50,7 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    private static List<Person> getPotentialWorkers(Collection<Person> persons) {
+    static List<Person> getPotentialWorkers(Collection<Person> persons) {
         return persons.stream()
                 .filter(person -> person.getEducation() == Education.HIGHER)
                 .filter(person -> {
